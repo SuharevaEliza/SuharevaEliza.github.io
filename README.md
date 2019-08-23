@@ -1,3 +1,3 @@
 # SuharevaEliza.github.io
 
-permalink: /index.html
+SW Demo site
