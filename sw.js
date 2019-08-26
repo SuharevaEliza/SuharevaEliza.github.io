@@ -1,9 +1,9 @@
 var  CACHE_NAME = 'myTestCache';
 var urlsToCache = [
-    'index.html',
-    'pages/recommendation.html',
-    'style.css',
-    'script.js'
+    '/index.html',
+    '/pages/recommendation.html',
+    '/style.css',
+    '/script.js'
 ];
 
 self.addEventListener('install', function(event) {

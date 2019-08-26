@@ -1,6 +1,7 @@
 #main-navigation {
     display: flex;
     justify-content: space-evenly;
+    margin-bottom: 20px;
 }
 
 #main-navigation a {
