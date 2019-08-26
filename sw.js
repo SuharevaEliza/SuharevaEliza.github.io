@@ -3,7 +3,12 @@ var urlsToCache = [
     '/index.html',
     '/pages/recommendations.html',
     '/style.css',
-    '/script.js'
+    '/script.js',
+    '//cdn.dynamicyield.com/api/8771369/api_dynamic.js',
+    '//cdn.dynamicyield.com/api/8771369/api_static.js',
+    '//cdn.dynamicyield.com',
+    '//st.dynamicyield.com',
+    '//st.dynamicyield.com'
 ];
 
 // INSTALLATION
@@ -12,7 +17,11 @@ self.addEventListener('install', function(event) {
         caches.open(CACHE_NAME)
             .then(function(cache) {
                 console.log('Opened cache');
-                return cache.addAll(urlsToCache);
+                cache.addAll(urlsToCache.map(function(urlToCache) {
+                    return new Request(urlToCache, { mode: 'no-cors' });
+                })).then(function() {
+                    console.log('All resources have been fetched and cached.');
+                });
             })
     );
 });
