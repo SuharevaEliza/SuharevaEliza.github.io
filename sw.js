@@ -55,3 +55,19 @@ self.addEventListener('fetch', function(event) {
     )
 });
 
+// CACHE MANAGEMENT IN ACTIVATION
+self.addEventListener('activate', function (event) {
+    var cacheWhitelist = ['myTestCache'];
+
+    event.waitUntil(
+        caches.keys().then(function (cacheNames) {
+            return Promise.all(
+                cacheNames.map(function (cacheName) {
+                    if (cacheWhitelist.indexOf(cacheName) === -1) {
+                        return caches.delete(cacheName);
+                    }
+                })
+            )
+        })
+    )
+});
