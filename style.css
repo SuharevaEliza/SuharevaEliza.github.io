@@ -18,3 +18,7 @@
 #main-navigation .selected {
     border-bottom: 1px solid black;
 }
+
+#header {
+    text-align: center;
+}
