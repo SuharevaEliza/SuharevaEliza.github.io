@@ -1,7 +1,7 @@
 var  CACHE_NAME = 'myTestCache';
 var urlsToCache = [
     '/index.html',
-    '/pages/recommendation.html',
+    '/pages/recommendations.html',
     '/style.css',
     '/script.js'
 ];
