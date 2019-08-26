@@ -1,0 +1,19 @@
+#main-navigation {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#main-navigation a {
+    text-decoration: none;
+    text-transform: uppercase;
+    padding: 10px;
+    color: black;
+}
+
+#main-navigation a:hover {
+    border-bottom: 1px solid black;
+}
+
+#main-navigation .selected {
+    border-bottom: 1px solid black;
+}
