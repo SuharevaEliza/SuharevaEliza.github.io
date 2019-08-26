@@ -26,3 +26,11 @@ body {
 #header {
     text-align: center;
 }
+
+.image-container {
+    text-align: center;
+}
+
+#image {
+    width: 600px;
+}
