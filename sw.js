@@ -41,8 +41,7 @@ self.addEventListener('fetch', function(event) {
 
                         // ensure the response is valid
                         // ('basic' indicates a request from our origin - requests to 3rd party are not cached)
-                        // if(!response || response.status !== 200 || response.type !== 'basic') {
-                        if(!response || response.status !== 200) {
+                        if(!response || response.status !== 200 || response.type !== 'basic') {
                             console.log(response);
                             return response;
                         }
