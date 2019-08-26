@@ -4,11 +4,8 @@ var urlsToCache = [
     '/pages/recommendations.html',
     '/style.css',
     '/script.js',
-    '//cdn.dynamicyield.com/api/8771369/api_dynamic.js',
-    '//cdn.dynamicyield.com/api/8771369/api_static.js',
-    '//cdn.dynamicyield.com',
-    '//st.dynamicyield.com',
-    '//st.dynamicyield.com'
+    'https://cdn.dynamicyield.com/api/8771369/api_dynamic.js',
+    'https://cdn.dynamicyield.com/api/8771369/api_static.js'
 ];
 
 // INSTALLATION
@@ -45,7 +42,8 @@ self.addEventListener('fetch', function(event) {
                         // ensure the response is valid
                         // ('basic' indicates a request from our origin - requests to 3rd party are not cached)
                         if(!response || response.status !== 200 || response.type !== 'basic') {
-                            return response
+                            console.log(response);
+                            return response;
                         }
 
                         // clone the response (to capture it from the stream) -
