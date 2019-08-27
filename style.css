@@ -41,7 +41,7 @@ body {
     width: 600px;
 }
 
-#button {
+#button button{
     width: 300px;
     height: 30px;
     outline: none;
@@ -49,6 +49,6 @@ body {
     background-color: #f9b3d3;
 }
 
-#button:hover {
+#button button:hover {
     cursor: pointer;
 }
