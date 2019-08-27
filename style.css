@@ -34,8 +34,8 @@ body {
 }
 
 #map {
-    width: 400px;
-    height: 400px;
+    width: 400px !important;
+    height: 400px !important;
 }
 
 .location {
@@ -54,7 +54,7 @@ body {
     width: 600px;
 }
 
-#button button{
+#clicks button{
     width: 300px;
     height: 30px;
     outline: none;
@@ -62,6 +62,12 @@ body {
     background-color: #f9b3d3;
 }
 
-#button button:hover {
+#clicks button:hover {
     cursor: pointer;
+}
+
+#message {
+    display: none;
+    text-align: center;
+    margin-top: 10px;
 }
