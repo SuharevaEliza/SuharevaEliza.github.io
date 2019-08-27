@@ -10,3 +10,13 @@ if ('serviceWorker' in navigator) {
         });
     });
 }
+
+var button = document.querySelector('#button');
+button.addEventListener('click', sendEvent);
+
+function sendEvent() {
+    DY.API('event',{
+        name: 'clicks fired',
+        properties: {}
+    });
+}
