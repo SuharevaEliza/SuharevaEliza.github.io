@@ -1,7 +1,7 @@
 var CACHE_NAME = 'myTestCache';
 var urlsToCache = [
     '/index.html',
-    '/pages/recommendations.html',
+    '/pages/contacts.html',
     '/style.css',
     '/script.js',
     'https://cdn.dynamicyield.com/api/8771369/api_dynamic.js',

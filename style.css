@@ -33,6 +33,14 @@ body {
     align-items: center;
 }
 
+.location {
+    font-weight: bold;
+}
+
+.location ~ p {
+    font-size: 12px;
+}
+
 .image-container {
     text-align: center;
 }

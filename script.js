@@ -11,35 +11,12 @@ if ('serviceWorker' in navigator) {
     });
 }
 
-const dyJwt = document.querySelector('meta[property="dyapi:jwt"]').content;
-const dyUserId = document.querySelector('meta[property="dyapi:userid"]').content;
-const dySessionId = document.querySelector('meta[property="dyapi:sessionid"]').content;
 
-var button = document.querySelector('#button');
-button.addEventListener('click', addToCart);
+var map = document.querySelector('#map');
 
-function callDY(path, body) {
-    body.user = { id: dyUserId };
-    body.sessionId = dySessionId;
-
-    return fetch(`https://direct-collect.dy-api.com/v2${path}`, {
-        method: 'POST',
-        headers: {
-            Authorization: `Bearer ${dyJwt}`,
-            'Content-Type': 'application/json',
-        },
-        cache: 'no-cache',
-        body: JSON.stringify(body),
-    });
-}
-
-async function addToCart(event) {
-    await callDY('/collect/user/event', {
-        events: [
-            {
-                name: 'Clicks fired',
-                properties: {}
-            },
-        ],
-    });
+function initMap() {
+    var location = {lat: -25.344, lng: 131.036};
+    var map = new google.maps.Map(
+        document.getElementById('map'), {zoom: 4, center: location});
+    var marker = new google.maps.Marker({position: location, map: map});
 }
