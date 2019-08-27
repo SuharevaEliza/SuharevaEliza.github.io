@@ -1,4 +1,5 @@
 console.log('script enabled');
+var localforage = require('node_modules/localforage/dist/localforage.js');
 
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
@@ -15,8 +16,9 @@ var button = document.querySelector('#button');
 button.addEventListener('click', sendEvent);
 
 function sendEvent() {
-    DY.API('event',{
-        name: 'clicks fired',
-        properties: {}
+    localforage.setItem('somekey', 'my xml request').then(function (value) {
+        console.log('set value: '+ value);
+    }).catch(function(err) {
+        console.log(err);
     });
 }
