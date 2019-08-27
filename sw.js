@@ -1,3 +1,5 @@
+importScripts('https://cdnjs.cloudflare.com/ajax/libs/localforage/1.7.3/localforage.min.js');
+
 var CACHE_NAME = 'myTestCache';
 var urlsToCache = [
     '/index.html',
@@ -30,7 +32,7 @@ self.addEventListener('fetch', function(event) {
         caches.match(event.request)
             .then(function (response) {
 
-                // if any match in cache found
+                // if any match in cache found === ENSURES CACHE FIRST PRINCIPLE
                 if (response) {
                     return response;
                 }
@@ -38,13 +40,6 @@ self.addEventListener('fetch', function(event) {
                 //otherwise return result of fetch (makes a network request, returns anything that can be received)
                 return fetch(event.request)
                     .then(function (response) {
-
-                        // ensure the response is valid
-                        // ('basic' indicates a request from our origin - requests to 3rd party are not cached)
-                        // if(!response || response.status !== 200 || response.type !== 'basic') {
-                        //     console.log(response);
-                        //     return response;
-                        // }
 
                         // clone the response (to capture it from the stream) -
                         // we want to pass it to browser and cache
@@ -55,7 +50,7 @@ self.addEventListener('fetch', function(event) {
                             .then(function (cache) {
                                 cache.put(event.request, responseToCache)
                             });
-
+                        console.log(response);
                         return response;
                     })
             })
