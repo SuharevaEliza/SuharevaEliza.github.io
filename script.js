@@ -15,6 +15,7 @@ var button = document.querySelector('#button');
 button.addEventListener('click', sender);
 
 function sender(){
+    var oReq = new XMLHttpRequest();
     var url = 'https:​//dy-api.com/v2​/collect/user/event';
     var body = {
         'user' : {
