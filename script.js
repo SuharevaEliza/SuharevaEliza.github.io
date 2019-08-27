@@ -1,4 +1,4 @@
-console.log('script enabled');
+console.log('oy');
 
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
@@ -35,7 +35,7 @@ function sender(){
     });
 
     oReq.open('POST', url);
-    oReq.setRequestHeader( 'DY-API-Key', 'c1a70218059b474d483a6a2d41b961ee455f7734f7575f34aa85a8f3e3f8a60e');
+    oReq.setRequestHeader('DY-API-Key', 'c1a70218059b474d483a6a2d41b961ee455f7734f7575f34aa85a8f3e3f8a60e');
     oReq.setRequestHeader('Content-Type', 'application/json');
     oReq.send(body);
 }
