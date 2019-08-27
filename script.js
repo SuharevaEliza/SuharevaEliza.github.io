@@ -11,32 +11,35 @@ if ('serviceWorker' in navigator) {
     });
 }
 
+const dyJwt = document.querySelector('meta[property="dyapi:jwt"]').content;
+const dyUserId = document.querySelector('meta[property="dyapi:userid"]').content;
+const dySessionId = document.querySelector('meta[property="dyapi:sessionid"]').content;
+
 var button = document.querySelector('#button');
-button.addEventListener('click', sender);
+button.addEventListener('click', addToCart);
 
-function sender(){
-    var oReq = new XMLHttpRequest();
-    var url = 'https:​//dy-api.com/v2​/collect/user/event';
-    var body = {
-        'user' : {
-            'id' : '5273715487327152493'
+function callDY(path, body) {
+    body.user = { id: dyUserId };
+    body.sessionId = dySessionId;
+
+    return fetch(`https://direct-collect.dy-api.com/v2${path}`, {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${dyJwt}`,
+            'Content-Type': 'application/json',
         },
-        'sessionId' : 'e89f7ab43ce281248b090bd460d7a1ac',
-        'events' : [
-            {
-                'name' : 'Clicks fired',
-                'properties' : {}
-            }
-        ]
-    };
-
-    oReq.addEventListener('loadend', function() {
-        console.log(oReq.responseText);
+        cache: 'no-cache',
+        body: JSON.stringify(body),
     });
+}
 
-    oReq.open('POST', url);
-    oReq.withCredentials = true;
-    oReq.setRequestHeader('DY-API-Key', 'c1a70218059b474d483a6a2d41b961ee455f7734f7575f34aa85a8f3e3f8a60e');
-    oReq.setRequestHeader('Content-Type', 'application/json');
-    oReq.send(body);
+async function addToCart(event) {
+    await callDY('/collect/user/event', {
+        events: [
+            {
+                name: 'Clicks fired',
+                properties: {}
+            },
+        ],
+    });
 }
