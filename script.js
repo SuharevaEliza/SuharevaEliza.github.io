@@ -9,15 +9,23 @@ if ('serviceWorker' in navigator) {
     });
 }
 
-var buttons = [].slice.call(document.querySelectorAll('#clicks button'));
-buttons.forEach(function(button){
-    button.addEventListener('click', sendRequest);
-});
+var getButton = document.querySelector('#get');
+var postButton = document.querySelector('#post');
 
 
-function sendRequest(){
-    var url = 'https://enh6y4mdg615v.x.pipedream.net/';
-    var method = 'GET';
+getButton.addEventListener('click', sendGetRequest);
+postButton.addEventListener('click', sendPostRequest);
+
+function sendGetRequest(){
+    sendRequest('GET');
+}
+
+function sendPostRequest(){
+    sendRequest('POST');
+}
+
+function sendRequest(method){
+    var url = 'https://enxzlv51hgx4a.x.pipedream.net/';
     var oReq = new XMLHttpRequest();
 
     oReq.onreadystatechange = function() {
