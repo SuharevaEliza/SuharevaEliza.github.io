@@ -31,7 +31,7 @@ self.addEventListener('fetch', function(event) {
             .then(function (response) {
 
                 // if any match in cache found
-                if(response) {
+                if (response) {
                     return response;
                 }
 
@@ -41,10 +41,10 @@ self.addEventListener('fetch', function(event) {
 
                         // ensure the response is valid
                         // ('basic' indicates a request from our origin - requests to 3rd party are not cached)
-                        if(!response || response.status !== 200 || response.type !== 'basic') {
-                            console.log(response);
-                            return response;
-                        }
+                        // if(!response || response.status !== 200 || response.type !== 'basic') {
+                        //     console.log(response);
+                        //     return response;
+                        // }
 
                         // clone the response (to capture it from the stream) -
                         // we want to pass it to browser and cache
