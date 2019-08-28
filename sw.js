@@ -44,6 +44,7 @@ self.addEventListener('fetch', function(event) {
                         // clone the response (to capture it from the stream) -
                         // we want to pass it to browser and cache
                         var responseToCache = response.clone();
+                        console.log(responseToCache);
 
 
                         caches.open(CACHE_NAME)
@@ -51,7 +52,7 @@ self.addEventListener('fetch', function(event) {
                                 console.log(event.request.method);
                                 if(event.request.method === "POST") {
                                     console.log(event.request);
-                                    localforage.setItem(event.request, responseToCache).then(function (value) {
+                                    localforage.setItem('outgoing_post', responseToCache).then(function (value) {
                                         console.log('saved in localForage');
                                         console.log(value);
                                     }).catch(function(err) {
