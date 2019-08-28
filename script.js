@@ -17,25 +17,28 @@ getButton.addEventListener('click', sendGetRequest);
 postButton.addEventListener('click', sendPostRequest);
 
 function sendGetRequest(){
-    sendRequest('GET');
+    sendRequest('GET', this);
 }
 
 function sendPostRequest(){
-    sendRequest('POST');
+    sendRequest('POST', this);
 }
 
-function sendRequest(method){
+function sendRequest(method, button){
     var url = 'https://enxzlv51hgx4a.x.pipedream.net/';
     var oReq = new XMLHttpRequest();
 
     oReq.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
-            var message = document.querySelector("#message");
-            message.style.setProperty('display', 'block');
-            message.innerHTML = oReq.responseText;
+            // var message = document.querySelector("#message");
+            // message.style.setProperty('display', 'block');
+            var oldText = button.textContent;
+            button.textContent = oReq.responseText;
+            button.classList.toggle('success');
             setTimeout(function () {
-                message.style.setProperty('display', 'none');
-            }, 2500)
+                button.textContent = oldText;
+                button.classList.toggle('success');
+            }, 1500)
         }
     };
 

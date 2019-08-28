@@ -48,12 +48,10 @@ self.addEventListener('fetch', function(event) {
 
                         caches.open(CACHE_NAME)
                             .then(function (cache) {
+                                console.log(event.request);
                                 cache.put(event.request, responseToCache)
-                            })
-                            .catch(function (err) {
-                                console.log(err);
-                                console.log(response);
                             });
+
                         // console.log(response);
                         return response;
                     })
