@@ -1,4 +1,4 @@
-importScripts('https://cdnjs.cloudflare.com/ajax/libs/localforage/1.7.3/localforage.min.js');
+importScripts('node_modules/localforage/dist/localforage.js');
 
 var CACHE_NAME = 'myTestCache';
 var urlsToCache = [
@@ -48,7 +48,15 @@ self.addEventListener('fetch', function(event) {
 
                         caches.open(CACHE_NAME)
                             .then(function (cache) {
-                                console.log(event.request);
+                                if(event.request.method === "POST") {
+                                    console.log(event.request);
+                                    localforage.setItem(event.request, responseToCache).then(function (value) {
+                                        console.log('saved in localForage');
+                                        console.log(value);
+                                    }).catch(function(err) {
+                                        console.log(err);
+                                    });
+                                }
                                 cache.put(event.request, responseToCache)
                             });
 
