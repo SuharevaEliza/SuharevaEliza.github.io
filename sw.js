@@ -52,7 +52,7 @@ self.addEventListener('fetch', function(event) {
                                 console.log(event.request.method);
                                 if(event.request.method === "POST") {
                                     console.log(event.request);
-                                    localforage.setItem('outgoing_post', responseToCache).then(function (value) {
+                                    localforage.setItem('outgoing_post', JSON.stringify(responseToCache)).then(function (value) {
                                         console.log('saved in localForage');
                                         console.log(value);
                                     }).catch(function(err) {
