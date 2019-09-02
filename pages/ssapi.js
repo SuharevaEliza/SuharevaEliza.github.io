@@ -10,7 +10,7 @@ callRecommendations()
     });
 
 function callRecommendations(){
-    return DYO.Q.Promise(function(resolve, reject){
+    return new DYO.Q.Promise(function(resolve, reject){
         var userID = 'u62d986ab7e';
         var sessionID = 'sf65a42c18de';
 
