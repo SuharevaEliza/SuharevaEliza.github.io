@@ -20,13 +20,13 @@ function callRecommendations(){
           },
           sessionId : sessionID,
             selector : {
-              names: ['API recs']
+              names: ['Recommendations']
             },
             context : {
               page : {
-                  type : 'HOMEPAGE',
+                  type : 'OTHER',
                   data : [],
-                  location : 'https://suharevaeliza.github.io/pages/contacts.html'
+                  location : 'https://suharevaeliza.github.io/pages/recommendations.html'
               }
             }
         };
