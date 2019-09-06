@@ -12,7 +12,7 @@ callRecommendations()
 function callRecommendations(){
     return new Promise(function(resolve, reject){
         var userID = 'u62d986ab7e';
-        var sessionID = 'sf65a42c18de';
+        var sessionID = 'iquahngaishe2koh';
 
         var data = {
           user: {
