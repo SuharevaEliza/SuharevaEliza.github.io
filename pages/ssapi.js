@@ -20,7 +20,7 @@ function callRecommendations(){
           },
           sessionId : sessionID,
             selector : {
-              names: ['Recommendations']
+              names: ['API recs']
             },
             context : {
               page : {
