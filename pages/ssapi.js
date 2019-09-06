@@ -24,7 +24,7 @@ function callRecommendations(){
             },
             context : {
               page : {
-                  type : 'OTHER',
+                  type : 'HOMEPAGE',
                   data : [],
                   location : 'https://suharevaeliza.github.io/pages/recommendations.html'
               }
