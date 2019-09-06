@@ -10,7 +10,7 @@ callRecommendations()
     });
 
 function callRecommendations(){
-    return new Promise(function(resolve, reject){
+    // return new Promise(function(resolve, reject){
         var userID = 'u62d986ab7e';
         var sessionID = 'iquahngaishe2koh';
 
@@ -35,9 +35,9 @@ function callRecommendations(){
 
         xhr.addEventListener("readystatechange", function () {
             if (this.readyState === this.DONE) {
-                resolve(this.responseText);
+                console.log(this.responseText);
             } else {
-                reject(this.responseText);
+                console.log(this.responseText);
             }
         });
 
@@ -46,5 +46,5 @@ function callRecommendations(){
         xhr.setRequestHeader("dy-api-key", "f205138651b370352c58fa1e88e0da801fc2b1f4a1050c60f4aa346d1e36166a");
 
         xhr.send(JSON.stringify(data));
-    })
+    // })
 }
