@@ -35,9 +35,9 @@ function callRecommendations(){
 
         xhr.addEventListener("readystatechange", function () {
             if (this.readyState === this.DONE) {
-                console.log(this.responseText);
+                console.log(JSON.parse(this.responseText));
             } else {
-                console.log(this.responseText);
+                console.log(JSON.parse(this.responseText));
             }
         });
 
