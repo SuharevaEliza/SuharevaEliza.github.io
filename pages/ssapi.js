@@ -1,13 +1,7 @@
 // var userId = document.querySelector('meta[property="dyapi:userid"]').content;
 // var sessionID = document.querySelector('meta[property="dyapi:sessionid"]').content;
 
-callRecommendations()
-    .then(function(data){
-        console.log(data);
-    })
-    .catch(function(err){
-        console.log(err);
-    });
+callRecommendations();
 
 function callRecommendations(){
     // return new Promise(function(resolve, reject){
@@ -35,9 +29,9 @@ function callRecommendations(){
 
         xhr.addEventListener("readystatechange", function () {
             if (this.readyState === this.DONE) {
-                console.log(JSON.parse(this.responseText));
+                console.log(this.responseText);
             } else {
-                console.log(JSON.parse(this.responseText));
+                console.log(this.responseText);
             }
         });
 
