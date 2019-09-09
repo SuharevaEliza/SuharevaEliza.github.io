@@ -9,11 +9,6 @@ if ('serviceWorker' in navigator) {
     });
 }
 
-navigator.serviceWorker.addEventListener('message', function(event) {
-    alert(event.data.alert);
-    store();
-});
-
 sendCachedPostRequests();
 
 var getButton = document.querySelector('#get');
@@ -27,6 +22,7 @@ function sendGetRequest(){
     sendRequest('GET', this);
     reportGet()
         .catch(function(){
+            console.log('didnt succeed');
             store();
         });
 }
@@ -92,14 +88,13 @@ function reportGet(){
 }
 
 function store() {
-    localStorage.setItem('newPostRequest', '1');
+    localforage.setItem('newPostRequest', 'one');
 }
 
 function sendCachedPostRequests(){
-    if(localStorage.getItem('newPostRequest')){
-        reportGet()
-            .then(function(){
-                localStorage.removeItem('newPostRequest');
-            });
-    }
+    localforage.getItem('newPostRequest')
+        .then(function(){
+            reportGet();
+            localforage.removeItem('newPostRequest');
+        })
 }
