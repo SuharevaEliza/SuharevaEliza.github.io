@@ -49,7 +49,7 @@ function callRecommendations(){
 
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                resolve(xhr.responseText);
+                resolve(JSON.parse(xhr.responseText));
             }
         };
 
