@@ -51,15 +51,21 @@ self.addEventListener('fetch', function(event) {
                             .then(function (cache) {
                                 console.log(event.request.method);
                                 if(event.request.method === "POST") {
-                                    // console.log(event.request);
-                                    localforage.setItem('outgoing_post', JSON.stringify({'method': event.request.method, 'url' : event.request.url}))
-                                        .then(function (value) {
-                                            console.log('saved in localForage');
-                                        // console.log(value);
-                                            console.log(responseToCache);
-                                        }).catch(function(err) {
-                                            console.log(err);
-                                        });
+                                    event.respondWith (
+                                        fetch(event.request.clone())
+                                            .then(function (response) {
+                                                localforage.setItem('post_cache', response.clone())
+                                                    .then(function(response){
+                                                    console.log(response);
+                                                });
+                                            })
+                                            .catch(function(){
+                                                localforage.getItem('post_cache')
+                                                    .then(function(value){
+                                                        console.log(value);
+                                                    })
+                                            })
+                                    )
                                 }
                                 cache.put(event.request, responseToCache)
                             });
