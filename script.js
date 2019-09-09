@@ -9,6 +9,11 @@ if ('serviceWorker' in navigator) {
     });
 }
 
+navigator.serviceWorker.addEventListener('message', function(event) {
+    alert(event.data.alert);
+    store();
+});
+
 var getButton = document.querySelector('#get');
 var postButton = document.querySelector('#post');
 
@@ -77,4 +82,14 @@ function reportGet(){
 
         xhr.send(JSON.stringify(data));
     })
+}
+
+function store() {
+    localStorage.setItem('newPostRequest', '1');
+}
+
+function sendCachedPostRequests(){
+    if(localStorage.getItem('newPostRequest')){
+        reportGet();
+    }
 }

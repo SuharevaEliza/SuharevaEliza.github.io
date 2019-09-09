@@ -48,12 +48,19 @@ self.addEventListener('fetch', function(event) {
                                 if(event.request.method === "GET") {
                                     cache.put(event.request, responseToCache);
                                 }
-                                // cache.put(event.request, responseToCache);
                             });
-
-                        // console.log(response);
                         return response.clone();
                     })
+                    .catch(function(){
+                        self.clients.match(thisClient).then(function(client) {
+                            client.postMessage({
+                                message: "Post unsuccessful.",
+                                alert: 'You are offline!'
+                            });
+                        });
+
+                        return caches.match(event.request.clone().referrer);
+                    });
             })
     )
 });
