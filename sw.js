@@ -1,4 +1,4 @@
-importScripts('../node_modules/localforage/dist/localforage.js');
+importScripts('https://cdnjs.cloudflare.com/ajax/libs/js-data-localforage/2.1.1/js-data-localforage.min.js');
 
 var CACHE_NAME = 'myTestCache';
 var urlsToCache = [
