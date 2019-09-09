@@ -83,10 +83,12 @@ body {
 #recommendations-div {
     display: flex;
     width: 80%;
+    text-align: center;
+    margin: 0 auto;
 }
 
 .recommendations-product {
-    width: 20%;
+    margin: 0 10px;
 }
 
 .recommendations-product img{

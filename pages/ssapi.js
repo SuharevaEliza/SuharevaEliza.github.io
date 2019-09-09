@@ -5,7 +5,11 @@ callRecommendations()
         var products = data.choices[0].variations[0].payload.data.slots;
 
         products.forEach(function(product){
-            var productContainer = createProductContainer();
+            var productContainer = document.createElement('a');
+            productContainer.classList.add('recommendations-product');
+            productContainer.href = product.productData.url;
+            productContainer.dataset.dySku = product.sku;
+
             var img = document.createElement('img');
             img.src = product.productData.image_url;
             productContainer.appendChild(img);
@@ -59,13 +63,6 @@ function callRecommendations(){
         xhr.send(JSON.stringify(data));
     })
 }
-
-function createProductContainer(){
-    var newDiv = createDiv();
-    newDiv.classList.add('recommendations-product');
-    return newDiv;
-}
-
 function createDiv(){
     return document.createElement('div');
 }
