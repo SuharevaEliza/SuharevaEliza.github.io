@@ -79,3 +79,16 @@ body {
     text-align: center;
     margin-top: 10px;
 }
+
+#recommendations-div {
+    display: flex;
+    width: 80%;
+}
+
+.recommendations-product {
+    width: 20%;
+}
+
+.recommendations-product img{
+    max-width: 100%;
+}

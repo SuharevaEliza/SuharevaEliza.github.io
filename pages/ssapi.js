@@ -1,7 +1,26 @@
-// var userId = document.querySelector('meta[property="dyapi:userid"]').content;
-// var sessionID = document.querySelector('meta[property="dyapi:sessionid"]').content;
+callRecommendations()
+    .then(function(data){
+        console.log(data);
+        var div = document.querySelector('#recommendations-div');
+        var products = data.choices[0].variations[0].payload.data.slots;
 
-callRecommendations().then(function(data){console.log(data)});
+        products.forEach(function(product){
+            var productContainer = createProductContainer();
+            var img = document.createElement('img');
+            img.src = product.productData.image_url;
+            productContainer.appendChild(img);
+
+            var name = createDiv();
+            name.innerText = product.productData.name;
+            productContainer.appendChild(name);
+
+            var price = createDiv();
+            price.textContent = product.productData.price;
+            productContainer.appendChild(price);
+
+            div.appendChild(productContainer);
+        })
+    });
 
 function callRecommendations(){
     return new Promise(function(resolve){
@@ -27,14 +46,6 @@ function callRecommendations(){
 
         var xhr = new XMLHttpRequest();
 
-        // xhr.addEventListener("readystatechange", function () {
-        //     if (this.readyState === this.DONE) {
-        //         console.log(this.responseText);
-        //     } else {
-        //         console.log(this.responseText);
-        //     }
-        // });
-
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 resolve(xhr.responseText);
@@ -47,4 +58,14 @@ function callRecommendations(){
 
         xhr.send(JSON.stringify(data));
     })
+}
+
+function createProductContainer(){
+    var newDiv = createDiv();
+    newDiv.classList.add('recommendations-product');
+    return newDiv;
+}
+
+function createDiv(){
+    return document.createElement('div');
 }
