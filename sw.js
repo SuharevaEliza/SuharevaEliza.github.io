@@ -51,16 +51,7 @@ self.addEventListener('fetch', function(event) {
                             .then(function (cache) {
                                 console.log(event.request.method);
                                 if(event.request.method === "POST") {
-                                    localforage.getItem('post_cache')
-                                        .then(function(response){
-                                            console.log(response);
-                                        })
-                                        .catch(function(){
-                                            localforage.setItem('post_cache', responseToCache)
-                                                .then(function(value){
-                                                    console.log(value);
-                                                })
-                                        });
+                                    console.log(responseToCache);
                                 } else {
                                     cache.put(event.request, responseToCache);
                                 }
