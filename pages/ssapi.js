@@ -1,25 +1,26 @@
 callRecommendations()
     .then(function(data){
         console.log(data);
-        var div = document.querySelector('#recommendations-div');
-        var products = data.choices[0].variations[0].payload.data.slots;
+        // var div = document.querySelector('#recommendations-div');
+        var products = data;
+        console.log(products);
 
-        products.forEach(function(product){
-            var productContainer = createProductContainer();
-            var img = document.createElement('img');
-            img.src = product.productData.image_url;
-            productContainer.appendChild(img);
-
-            var name = createDiv();
-            name.innerText = product.productData.name;
-            productContainer.appendChild(name);
-
-            var price = createDiv();
-            price.textContent = product.productData.price;
-            productContainer.appendChild(price);
-
-            div.appendChild(productContainer);
-        })
+        // products.forEach(function(product){
+        //     var productContainer = createProductContainer();
+        //     var img = document.createElement('img');
+        //     img.src = product.productData.image_url;
+        //     productContainer.appendChild(img);
+        //
+        //     var name = createDiv();
+        //     name.innerText = product.productData.name;
+        //     productContainer.appendChild(name);
+        //
+        //     var price = createDiv();
+        //     price.textContent = product.productData.price;
+        //     productContainer.appendChild(price);
+        //
+        //     div.appendChild(productContainer);
+        // })
     });
 
 function callRecommendations(){
