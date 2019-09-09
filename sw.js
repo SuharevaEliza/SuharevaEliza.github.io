@@ -44,20 +44,22 @@ self.addEventListener('fetch', function(event) {
                         // clone the response (to capture it from the stream) -
                         // we want to pass it to browser and cache
                         var responseToCache = response.clone();
-                        console.log(responseToCache);
+                        // console.log(responseToCache);
 
 
                         caches.open(CACHE_NAME)
                             .then(function (cache) {
                                 console.log(event.request.method);
                                 if(event.request.method === "POST") {
-                                    console.log(event.request);
-                                    localforage.setItem('outgoing_post', JSON.stringify({'method': event.request.method, 'url' : event.request.url})).then(function (value) {
-                                        console.log('saved in localForage');
-                                        console.log(value);
-                                    }).catch(function(err) {
-                                        console.log(err);
-                                    });
+                                    // console.log(event.request);
+                                    localforage.setItem('outgoing_post', JSON.stringify({'method': event.request.method, 'url' : event.request.url}))
+                                        .then(function (value) {
+                                            console.log('saved in localForage');
+                                        // console.log(value);
+                                            console.log(responseToCache);
+                                        }).catch(function(err) {
+                                            console.log(err);
+                                        });
                                 }
                                 cache.put(event.request, responseToCache)
                             });
