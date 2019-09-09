@@ -51,23 +51,19 @@ self.addEventListener('fetch', function(event) {
                             .then(function (cache) {
                                 console.log(event.request.method);
                                 if(event.request.method === "POST") {
-                                    event.respondWith (
-                                        fetch(event.request)
-                                            .then(function (response) {
-                                                localforage.setItem('post_cache', response.clone())
-                                                    .then(function(response){
-                                                    console.log(response);
-                                                });
-                                            })
-                                            .catch(function(){
-                                                localforage.getItem('post_cache')
-                                                    .then(function(value){
-                                                        console.log(value);
-                                                    })
-                                            })
-                                    )
+                                    localforage.getItem('post_cache')
+                                        .then(function(response){
+                                            console.log(response);
+                                        })
+                                        .catch(function(){
+                                            localforage.setItem('post_cache', responseToCache)
+                                                .then(function(value){
+                                                    console.log(value);
+                                                })
+                                        });
+                                } else {
+                                    cache.put(event.request, responseToCache);
                                 }
-                                cache.put(event.request, responseToCache)
                             });
 
                         // console.log(response);
