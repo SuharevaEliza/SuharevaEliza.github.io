@@ -52,7 +52,7 @@ self.addEventListener('fetch', function(event) {
                                 console.log(event.request.method);
                                 if(event.request.method === "POST") {
                                     event.respondWith (
-                                        fetch(event.request.clone())
+                                        fetch(event.request)
                                             .then(function (response) {
                                                 localforage.setItem('post_cache', response.clone())
                                                     .then(function(response){
