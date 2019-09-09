@@ -3,7 +3,7 @@ callRecommendations()
         console.log(data);
         // var div = document.querySelector('#recommendations-div');
         var products = data;
-        console.log(products);
+        console.log(products.choices);
 
         // products.forEach(function(product){
         //     var productContainer = createProductContainer();
