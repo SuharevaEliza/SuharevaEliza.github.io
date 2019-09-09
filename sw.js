@@ -44,7 +44,6 @@ self.addEventListener('fetch', function(event) {
                         // clone the response (to capture it from the stream) -
                         // we want to pass it to browser and cache
                         var responseToCache = response.clone();
-                        // console.log(responseToCache);
 
 
                         caches.open(CACHE_NAME)
@@ -52,9 +51,8 @@ self.addEventListener('fetch', function(event) {
                                 console.log(event.request.method);
                                 if(event.request.method === "POST") {
                                     console.log(responseToCache);
-                                } else {
-                                    cache.put(event.request, responseToCache);
                                 }
+                                cache.put(event.request, responseToCache);
                             });
 
                         // console.log(response);
