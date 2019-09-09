@@ -2,7 +2,7 @@ callRecommendations()
     .then(function(data){
         console.log(data);
         var div = document.querySelector('#recommendations-div');
-        var products = data;
+        var products = data.choices[0].variations[0].payload.data.slots;
 
         products.forEach(function(product){
             var productContainer = createProductContainer();
