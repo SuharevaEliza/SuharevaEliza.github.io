@@ -4,8 +4,6 @@ var urlsToCache = [
     '/pages/contacts.html',
     '/style.css',
     '/script.js',
-    'https://cdn.dynamicyield.com/api/8771369/api_dynamic.js',
-    'https://cdn.dynamicyield.com/api/8771369/api_static.js'
 ];
 
 // INSTALLATION
@@ -47,14 +45,14 @@ self.addEventListener('fetch', function(event) {
                         caches.open(CACHE_NAME)
                             .then(function (cache) {
                                 console.log(event.request.method);
-                                if(event.request.method === "POST") {
-                                    console.log(responseToCache);
+                                if(event.request.method === "GET") {
+                                    cache.put(event.request, responseToCache);
                                 }
-                                cache.put(event.request, responseToCache);
+                                // cache.put(event.request, responseToCache);
                             });
 
                         // console.log(response);
-                        return response;
+                        return response.clone();
                     })
             })
     )
