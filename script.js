@@ -90,6 +90,9 @@ function store() {
 
 function sendCachedPostRequests(){
     if(localStorage.getItem('newPostRequest')){
-        reportGet();
+        reportGet()
+            .then(function(){
+                localStorage.removeItem('newPostRequest');
+            });
     }
 }
