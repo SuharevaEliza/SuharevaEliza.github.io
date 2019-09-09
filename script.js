@@ -14,6 +14,8 @@ navigator.serviceWorker.addEventListener('message', function(event) {
     store();
 });
 
+sendCachedPostRequests();
+
 var getButton = document.querySelector('#get');
 var postButton = document.querySelector('#post');
 
@@ -23,7 +25,10 @@ postButton.addEventListener('click', sendPostRequest);
 
 function sendGetRequest(){
     sendRequest('GET', this);
-    reportGet();
+    reportGet()
+        .catch(function(){
+            store();
+        });
 }
 
 function sendPostRequest(){
@@ -73,6 +78,8 @@ function reportGet(){
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 resolve(JSON.parse(xhr.responseText));
+            } else {
+                reject();
             }
         };
 
