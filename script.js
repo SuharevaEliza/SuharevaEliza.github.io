@@ -1,4 +1,4 @@
-importScripts('/node_modules/localforage/dist/localforage.js');
+var localforage = new Worker('/node_modules/localforage/dist/localforage.js');
 
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
