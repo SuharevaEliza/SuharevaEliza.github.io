@@ -1,5 +1,3 @@
-var localforage = new Worker('/node_modules/localforage/dist/localforage.js');
-
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
         navigator.serviceWorker.register('sw.js').then(function(registration) {
@@ -11,7 +9,7 @@ if ('serviceWorker' in navigator) {
     });
 }
 
-sendCachedPostRequests();
+// sendCachedPostRequests();
 
 var getButton = document.querySelector('#get');
 var postButton = document.querySelector('#post');
