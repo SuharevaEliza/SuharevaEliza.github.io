@@ -58,7 +58,7 @@ function sendRequest(method, button){
 }
 
 function reportGet(){
-    return new Promise(function(resolve){
+    return new Promise(function(resolve, reject){
         var userID = 'u62d986ab7e';
         var sessionID = 'iquahngaishe2koh';
 
