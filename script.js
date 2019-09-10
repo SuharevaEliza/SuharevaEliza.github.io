@@ -1,3 +1,5 @@
+importScripts('/node_modules/localforage/dist/localforage.js');
+
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
         navigator.serviceWorker.register('sw.js').then(function(registration) {
@@ -28,7 +30,11 @@ function sendGetRequest(){
 }
 
 function sendPostRequest(){
-    sendRequest('POST', this);
+    if(navigator.onLine) {
+        sendRequest('POST', this);
+    } else {
+        store();
+    }
 }
 
 function sendRequest(method, button){
@@ -88,6 +94,7 @@ function reportGet(){
 }
 
 function store() {
+    console.log('storing');
     localforage.setItem('newPostRequest', 'one');
 }
 
