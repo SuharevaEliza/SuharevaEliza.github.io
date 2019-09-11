@@ -8,9 +8,6 @@ if ('serviceWorker' in navigator) {
         });
     });
 }
-
-// sendCachedPostRequests();
-
 var getButton = document.querySelector('#get');
 var postButton = document.querySelector('#post');
 
@@ -19,20 +16,23 @@ getButton.addEventListener('click', sendGetRequest);
 postButton.addEventListener('click', sendPostRequest);
 
 function sendGetRequest(){
-    sendRequest('GET', this);
-    reportGet()
-        .catch(function(){
-            console.log('didnt succeed');
-            store();
+    sendREQ('https://image.flaticon.com/icons/svg/742/742751.svg')
+        .then(function(data){
+            var oldText = getButton.textContent;
+
+            getButton.innerHTML = data;
+            getButton.classList.toggle('success');
+
+            setTimeout(function () {
+                getButton.textContent = oldText;
+                getButton.classList.toggle('success');
+            }, 1500)
         });
 }
 
 function sendPostRequest(){
-    if(navigator.onLine) {
-        sendRequest('POST', this);
-    } else {
-        store();
-    }
+    sendRequest('POST', this);
+    reportPOST();
 }
 
 function sendRequest(method, button){
@@ -57,8 +57,22 @@ function sendRequest(method, button){
     oReq.send('');
 }
 
-function reportGet(){
-    return new Promise(function(resolve, reject){
+function sendREQ(url) {
+    return new Promise(function (resolve) {
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                resolve(xhr.responseText);
+            }
+        };
+
+        xhr.open("GET", url, true);
+        xhr.send();
+    })
+}
+
+function reportPOST(){
+    return new Promise(function(resolve){
         var userID = 'u62d986ab7e';
         var sessionID = 'iquahngaishe2koh';
 
@@ -68,7 +82,7 @@ function reportGet(){
             },
             sessionId : sessionID,
             events : [{
-                name: 'GET clicked',
+                name: 'POST clicked',
                 properties: {}
             }]
         };
@@ -78,8 +92,6 @@ function reportGet(){
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 resolve(JSON.parse(xhr.responseText));
-            } else {
-                reject();
             }
         };
 
@@ -89,17 +101,4 @@ function reportGet(){
 
         xhr.send(JSON.stringify(data));
     })
-}
-
-function store() {
-    console.log('storing');
-    localforage.setItem('newPostRequest', 'one');
-}
-
-function sendCachedPostRequests(){
-    localforage.getItem('newPostRequest')
-        .then(function(){
-            reportGet();
-            localforage.removeItem('newPostRequest');
-        })
 }

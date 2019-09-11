@@ -58,11 +58,25 @@ body {
     width: 600px;
 }
 
+#clicks {
+    display: flex;
+    justify-content: center;
+}
+
+#get {
+    margin-right: 10px;
+}
+
 #clicks button{
-    padding: 20px 60px;
+    height: 60px;
+    width: 150px;
     outline: none;
     border: 1px solid black;
     background-color: white;
+}
+
+#clicks button svg{
+    height: 80%;
 }
 
 #clicks button.success{

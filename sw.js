@@ -45,21 +45,13 @@ self.addEventListener('fetch', function(event) {
                         caches.open(CACHE_NAME)
                             .then(function (cache) {
                                 console.log(event.request.method);
-                                if(event.request.method === "GET") {
+                                if (event.request.method === "GET") {
                                     cache.put(event.request, responseToCache);
+                                } else {
+                                   alert('Sorry, this feature is not available offline!');
                                 }
                             });
                         return response.clone();
-                    })
-                    .catch(function(){
-                        self.clients.match(thisClient).then(function(client) {
-                            client.postMessage({
-                                message: "Post unsuccessful.",
-                                alert: 'You are offline!'
-                            });
-                        });
-
-                        return caches.match(event.request.clone().referrer);
                     });
             })
     )
