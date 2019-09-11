@@ -41,14 +41,15 @@ self.addEventListener('fetch', function(event) {
                         // we want to pass it to browser and cache
                         var responseToCache = response.clone();
 
-
                         caches.open(CACHE_NAME)
                             .then(function (cache) {
-                                console.log(event.request.method);
                                 if (event.request.method === "GET") {
                                     cache.put(event.request, responseToCache);
                                 } else {
-                                   alert('Sorry, this feature is not available offline!');
+                                    client.postMessage({
+                                        msg: "Hey I just got a fetch from you!",
+                                        url: event.request.url
+                                    });
                                 }
                             });
                         return response.clone();
