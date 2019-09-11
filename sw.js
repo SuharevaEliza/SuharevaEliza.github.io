@@ -54,7 +54,7 @@ self.addEventListener('fetch', function(event) {
                                     });
                                 }
                             });
-                        return responseToCache;
+                        return response.clone();
                     });
             })
     )
