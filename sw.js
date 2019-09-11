@@ -42,28 +42,19 @@ self.addEventListener('fetch', function(event) {
                         var responseToCache = response.clone();
 
                         console.log("clientId: " + event.clientId);
-                        if(event.request.method === "GET") {
-                            caches.open(CACHE_NAME)
-                                .then(function (cache) {
+                        caches.open(CACHE_NAME)
+                            .then(function (cache) {
+                                if (event.request.method === "GET") {
                                     cache.put(event.request, responseToCache);
-                                });
-                        }
-
+                                } else {
+                                    self.clients.matchAll().then(function(clients) {
+                                        clients.forEach(function(client){
+                                            client.postMessage('hello from the other side');
+                                        });
+                                    });
+                                }
+                            });
                         return responseToCache;
-
-                        // caches.open(CACHE_NAME)
-                        //     .then(function (cache) {
-                        //         if (event.request.method === "GET") {
-                        //             cache.put(event.request, responseToCache);
-                        //         } else {
-                        //             const client = clients.get(event.clientId);
-                        //             client.postMessage({
-                        //                 msg: "Hey I just got a fetch from you!",
-                        //                 url: event.request.url
-                        //             });
-                        //         }
-                        //     });
-                        // return response.clone();
                     });
             })
     )
