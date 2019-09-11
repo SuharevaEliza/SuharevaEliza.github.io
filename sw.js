@@ -46,6 +46,7 @@ self.addEventListener('fetch', function(event) {
                                 if (event.request.method === "GET") {
                                     cache.put(event.request, responseToCache);
                                 } else {
+                                    const client = await clients.get(event.clientId);
                                     client.postMessage({
                                         msg: "Hey I just got a fetch from you!",
                                         url: event.request.url
