@@ -41,19 +41,29 @@ self.addEventListener('fetch', function(event) {
                         // we want to pass it to browser and cache
                         var responseToCache = response.clone();
 
-                        caches.open(CACHE_NAME)
-                            .then(function (cache) {
-                                if (event.request.method === "GET") {
+                        console.log("clientId: " + event.clientId);
+                        if(event.request.method === "GET") {
+                            caches.open(CACHE_NAME)
+                                .then(function (cache) {
                                     cache.put(event.request, responseToCache);
-                                } else {
-                                    const client = await clients.get(event.clientId);
-                                    client.postMessage({
-                                        msg: "Hey I just got a fetch from you!",
-                                        url: event.request.url
-                                    });
-                                }
-                            });
-                        return response.clone();
+                                });
+                        }
+
+                        return responseToCache;
+
+                        // caches.open(CACHE_NAME)
+                        //     .then(function (cache) {
+                        //         if (event.request.method === "GET") {
+                        //             cache.put(event.request, responseToCache);
+                        //         } else {
+                        //             const client = clients.get(event.clientId);
+                        //             client.postMessage({
+                        //                 msg: "Hey I just got a fetch from you!",
+                        //                 url: event.request.url
+                        //             });
+                        //         }
+                        //     });
+                        // return response.clone();
                     });
             })
     )
