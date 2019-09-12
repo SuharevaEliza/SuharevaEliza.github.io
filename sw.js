@@ -21,63 +21,105 @@ self.addEventListener('install', function(event) {
     );
 });
 
-
 // RETURNING REQUESTS
-self.addEventListener('fetch', function(event) {
+self.addEventListener('fetch', function (event) {
     event.respondWith(
         caches.match(event.request)
-            .then(function (response) {
+            .then(function(response){
+                if(event.request.method === 'GET'){
+                    if (response) {
+                        return response;
+                    }
+                    return fetch(event.request)
+                        .then(function (response) {
 
-                // if any match in cache found === ENSURES CACHE FIRST PRINCIPLE
-                if (response) {
-                    return response;
-                }
+                            // clone the response (to capture it from the stream) -
+                            // we want to pass it to browser and cache
+                            var responseToCache = response.clone();
 
-                //otherwise return result of fetch (makes a network request, returns anything that can be received)
-                return fetch(event.request)
-                    .then(function (response) {
-
-                        // clone the response (to capture it from the stream) -
-                        // we want to pass it to browser and cache
-                        var responseToCache = response.clone();
-
-                        if (event.request.method === "GET") {
-                            caches.open(CACHE_NAME)
+                            return caches.open(CACHE_NAME)
                                 .then(function (cache) {
                                     cache.put(event.request, responseToCache);
+                                    return response;
                                 })
-                        } else {
+                        });
+                } else {
+                    return fetch(event.request)
+                        .then(function (response) {
                             self.clients.matchAll()
                                 .then(function (clients) {
-                                    clients.forEach(function(client){
+                                    clients.forEach(function (client) {
                                         console.log('posting from SW');
                                         client.postMessage({
                                             message: 'hello from the other side',
                                             url: event.request.url
                                         });
-                                    })
-                                })
-                        }
-
-
-                        // caches.open(CACHE_NAME)
-                        //     .then(function (cache) {
-                        //         if (event.request.method === "GET") {
-                        //             cache.put(event.request, responseToCache);
-                        //         } else {
-                        //             self.clients.matchAll().then(function(clients) {
-                        //                 clients.forEach(function(client){
-                        //                     console.log('posting from SW');
-                        //                     client.postMessage('hello from the other side');
-                        //                 });
-                        //             });
-                        //         }
-                        //     });
-                        return response.clone();
-                    });
+                                    });
+                                });
+                            return response;
+                        });
+                }
             })
     )
 });
+
+// // RETURNING REQUESTS
+// self.addEventListener('fetch', function(event) {
+//     event.respondWith(
+//         caches.match(event.request)
+//             .then(function (response) {
+//
+//                 // if any match in cache found === ENSURES CACHE FIRST PRINCIPLE
+//                 if (response) {
+//                     return response;
+//                 }
+//
+//                 //otherwise return result of fetch (makes a network request, returns anything that can be received)
+//                 return fetch(event.request)
+//                     .then(function (response) {
+//
+//                         // clone the response (to capture it from the stream) -
+//                         // we want to pass it to browser and cache
+//                         var responseToCache = response.clone();
+//
+//                         if (event.request.method === "GET") {
+//                             return caches.open(CACHE_NAME)
+//                                 .then(function (cache) {
+//                                     cache.put(event.request, responseToCache);
+//                                     return response;
+//                                 })
+//                         } else {
+//                             self.clients.matchAll()
+//                                 .then(function (clients) {
+//                                     clients.forEach(function(client){
+//                                         console.log('posting from SW');
+//                                         client.postMessage({
+//                                             message: 'hello from the other side',
+//                                             url: event.request.url
+//                                         });
+//                                     })
+//                                 })
+//                         }
+//
+//
+//                         // caches.open(CACHE_NAME)
+//                         //     .then(function (cache) {
+//                         //         if (event.request.method === "GET") {
+//                         //             cache.put(event.request, responseToCache);
+//                         //         } else {
+//                         //             self.clients.matchAll().then(function(clients) {
+//                         //                 clients.forEach(function(client){
+//                         //                     console.log('posting from SW');
+//                         //                     client.postMessage('hello from the other side');
+//                         //                 });
+//                         //             });
+//                         //         }
+//                         //     });
+//                         // return response.clone();
+//                     });
+//             })
+//     )
+// });
 
 // CACHE MANAGEMENT IN ACTIVATION
 self.addEventListener('activate', function (event) {
