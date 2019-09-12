@@ -41,19 +41,38 @@ self.addEventListener('fetch', function(event) {
                         // we want to pass it to browser and cache
                         var responseToCache = response.clone();
 
-                        console.log("clientId: " + event.clientId);
-                        caches.open(CACHE_NAME)
-                            .then(function (cache) {
-                                if (event.request.method === "GET") {
+                        if (event.request.method === "GET") {
+                            caches.open(CACHE_NAME)
+                                .then(function (cache) {
                                     cache.put(event.request, responseToCache);
-                                } else {
-                                    self.clients.matchAll().then(function(clients) {
-                                        clients.forEach(function(client){
-                                            client.postMessage('hello from the other side');
+                                })
+                        } else {
+                            self.clients.matchAll()
+                                .then(function (clients) {
+                                    clients.forEach(function(client){
+                                        console.log('posting from SW');
+                                        client.postMessage({
+                                            message: 'hello from the other side',
+                                            url: event.request.url
                                         });
-                                    });
-                                }
-                            });
+                                    })
+                                })
+                        }
+
+
+                        // caches.open(CACHE_NAME)
+                        //     .then(function (cache) {
+                        //         if (event.request.method === "GET") {
+                        //             cache.put(event.request, responseToCache);
+                        //         } else {
+                        //             self.clients.matchAll().then(function(clients) {
+                        //                 clients.forEach(function(client){
+                        //                     console.log('posting from SW');
+                        //                     client.postMessage('hello from the other side');
+                        //                 });
+                        //             });
+                        //         }
+                        //     });
                         return response.clone();
                     });
             })

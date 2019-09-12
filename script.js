@@ -10,7 +10,7 @@ if ('serviceWorker' in navigator) {
 }
 
 navigator.serviceWorker.addEventListener('message', function(event) {
-    console.log("Message from SW" + event.data.msg, event.data.url);
+    console.log("Message from SW " + event.data.message +" " + event.data.url);
 });
 
 
