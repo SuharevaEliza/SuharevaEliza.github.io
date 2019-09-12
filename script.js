@@ -11,9 +11,8 @@ if ('serviceWorker' in navigator) {
 
 navigator.serviceWorker.addEventListener('message', function(event) {
     if(!navigator.onLine){
-        alert('Sorry, resource ' + event.data.url + ' is not available offline!');
+        alert(event.data.message + "\r\n (" + event.data.url + ")");
     }
-    console.log("Message from SW " + event.data.message +" " + event.data.url);
 });
 
 

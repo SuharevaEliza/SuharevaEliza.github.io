@@ -2,6 +2,7 @@ var CACHE_NAME = 'myTestCache';
 var urlsToCache = [
     '/index.html',
     '/pages/contacts.html',
+    '/pages/recommendations.html',
     '/style.css',
     '/script.js',
 ];
@@ -57,7 +58,7 @@ self.addEventListener('fetch', function (event) {
                                     clients.forEach(function (client) {
                                         console.log(event.request);
                                         client.postMessage({
-                                            message: 'hello from the other side',
+                                            message: 'Sorry, this resource is not available offline!',
                                             url: event.request.url
                                         });
                                     });
@@ -68,64 +69,6 @@ self.addEventListener('fetch', function (event) {
             })
     )
 });
-
-// // RETURNING REQUESTS
-// self.addEventListener('fetch', function(event) {
-//     event.respondWith(
-//         caches.match(event.request)
-//             .then(function (response) {
-//
-//                 // if any match in cache found === ENSURES CACHE FIRST PRINCIPLE
-//                 if (response) {
-//                     return response;
-//                 }
-//
-//                 //otherwise return result of fetch (makes a network request, returns anything that can be received)
-//                 return fetch(event.request)
-//                     .then(function (response) {
-//
-//                         // clone the response (to capture it from the stream) -
-//                         // we want to pass it to browser and cache
-//                         var responseToCache = response.clone();
-//
-//                         if (event.request.method === "GET") {
-//                             return caches.open(CACHE_NAME)
-//                                 .then(function (cache) {
-//                                     cache.put(event.request, responseToCache);
-//                                     return response;
-//                                 })
-//                         } else {
-//                             self.clients.matchAll()
-//                                 .then(function (clients) {
-//                                     clients.forEach(function(client){
-//                                         console.log('posting from SW');
-//                                         client.postMessage({
-//                                             message: 'hello from the other side',
-//                                             url: event.request.url
-//                                         });
-//                                     })
-//                                 })
-//                         }
-//
-//
-//                         // caches.open(CACHE_NAME)
-//                         //     .then(function (cache) {
-//                         //         if (event.request.method === "GET") {
-//                         //             cache.put(event.request, responseToCache);
-//                         //         } else {
-//                         //             self.clients.matchAll().then(function(clients) {
-//                         //                 clients.forEach(function(client){
-//                         //                     console.log('posting from SW');
-//                         //                     client.postMessage('hello from the other side');
-//                         //                 });
-//                         //             });
-//                         //         }
-//                         //     });
-//                         // return response.clone();
-//                     });
-//             })
-//     )
-// });
 
 // CACHE MANAGEMENT IN ACTIVATION
 self.addEventListener('activate', function (event) {
