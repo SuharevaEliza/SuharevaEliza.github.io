@@ -44,8 +44,14 @@ self.addEventListener('fetch', function (event) {
                                 })
                         });
                 } else {
+                    console.log('POST request');
                     return fetch(event.request)
                         .then(function (response) {
+                            console.log('POST request success');
+                            return response;
+                        })
+                        .catch(function(err) {
+                            console.log('POST request fail: ' + err);
                             self.clients.matchAll()
                                 .then(function (clients) {
                                     clients.forEach(function (client) {
@@ -55,8 +61,8 @@ self.addEventListener('fetch', function (event) {
                                             url: event.request.url
                                         });
                                     });
+                                    return response;
                                 });
-                            return response;
                         });
                 }
             })
