@@ -1,3 +1,10 @@
+navigator.serviceWorker.addEventListener('message', function(event) {
+    if(!navigator.onLine){
+        alert('Sorry, resource ' + event.data.url + ' is not available offline!');
+    }
+    console.log("Message from SW " + event.data.message +" " + event.data.url);
+});
+
 callRecommendations()
     .then(function(data){
         var div = document.querySelector('#recommendations-div');

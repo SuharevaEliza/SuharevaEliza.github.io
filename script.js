@@ -21,12 +21,8 @@ var getButton = document.querySelector('#get');
 var postButton = document.querySelector('#post');
 
 
-if(getButton){
-    getButton.addEventListener('click', sendGetRequest);
-}
-if(postButton) {
-    postButton.addEventListener('click', sendPostRequest);
-}
+getButton.addEventListener('click', sendGetRequest);
+postButton.addEventListener('click', sendPostRequest);
 
 function sendGetRequest(){
     sendREQ('https://image.flaticon.com/icons/svg/742/742751.svg')
