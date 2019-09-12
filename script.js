@@ -10,6 +10,9 @@ if ('serviceWorker' in navigator) {
 }
 
 navigator.serviceWorker.addEventListener('message', function(event) {
+    if(!navigator.onLine){
+        alert('Sorry, this resource is not available!');
+    }
     console.log("Message from SW " + event.data.message +" " + event.data.url);
 });
 
