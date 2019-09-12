@@ -55,7 +55,7 @@ self.addEventListener('fetch', function (event) {
                             self.clients.matchAll()
                                 .then(function (clients) {
                                     clients.forEach(function (client) {
-                                        console.log('posting from SW');
+                                        console.log(event.request);
                                         client.postMessage({
                                             message: 'hello from the other side',
                                             url: event.request.url
