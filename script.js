@@ -12,10 +12,6 @@ if ('serviceWorker' in navigator) {
 navigator.serviceWorker.addEventListener('message', function(event) {
     if(!navigator.onLine){
         alert(event.data.message + "\r\n (" + event.data.url + ")");
-        define(['localforage'], function(localforage) {
-            localforage.setItem('POSTS', event.data.url)
-                .then(console.log('added!'));
-        });
     }
 });
 

@@ -5,7 +5,6 @@ var urlsToCache = [
     '/pages/recommendations.html',
     '/style.css',
     '/script.js',
-    'https://cdnjs.cloudflare.com/ajax/libs/js-data-localforage/2.1.1/js-data-localforage.min.js'
 ];
 
 // INSTALLATION
@@ -47,8 +46,6 @@ self.addEventListener('fetch', function (event) {
                         });
                 } else {
                     console.log('POST request');
-                    var requestBody = JSON.stringify(event.request.text().clone());
-
                     return fetch(event.request)
                         .then(function (response) {
                             console.log('POST request success');
@@ -61,8 +58,7 @@ self.addEventListener('fetch', function (event) {
                                     clients.forEach(function (client) {
                                         client.postMessage({
                                             message: 'Sorry, this resource is not available offline!',
-                                            url: event.request.url,
-                                            body: requestBody
+                                            url: event.request.url
                                         });
                                     });
                                     return response;
