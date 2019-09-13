@@ -27,6 +27,12 @@
 </div>
 
 
-<script type="text/javascript" src="script.js"></script>
+<script data-main="config" src="require.js"></script>
+<script>
+    require(['config'], function(){
+        require('script');
+    })
+</script>
+<!--<script type="text/javascript" src="script.js"></script>-->
 </body>
 </html>

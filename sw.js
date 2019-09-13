@@ -5,6 +5,7 @@ var urlsToCache = [
     '/pages/recommendations.html',
     '/style.css',
     '/script.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/js-data-localforage/2.1.1/js-data-localforage.min.js'
 ];
 
 // INSTALLATION

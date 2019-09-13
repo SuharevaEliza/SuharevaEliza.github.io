@@ -1,5 +1,3 @@
-// var localforage = import('/localforage')
-
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
         navigator.serviceWorker.register('sw.js').then(function(registration) {
@@ -13,8 +11,11 @@ if ('serviceWorker' in navigator) {
 
 navigator.serviceWorker.addEventListener('message', function(event) {
     if(!navigator.onLine){
-        // alert(event.data.message + "\r\n (" + event.data.url + ")");
-        alert(event.data.body);
+        alert(event.data.message + "\r\n (" + event.data.url + ")");
+        define(['localforage'], function(localforage) {
+            localforage.setItem('POSTS', event.data.url)
+                .then(console.log('added!'));
+        });
     }
 });
 
