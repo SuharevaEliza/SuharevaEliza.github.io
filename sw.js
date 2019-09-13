@@ -46,12 +46,11 @@ self.addEventListener('fetch', function (event) {
                         });
                 } else {
                     console.log('POST request');
-                    console.log(event);
-                    console.log(event.request.text());
+                    var requestBody = JSON.stringify(event.request.text());
+
                     return fetch(event.request)
                         .then(function (response) {
                             console.log('POST request success');
-                            console.log(response.clone());
                             return response;
                         })
                         .catch(function(err) {
@@ -62,7 +61,7 @@ self.addEventListener('fetch', function (event) {
                                         client.postMessage({
                                             message: 'Sorry, this resource is not available offline!',
                                             url: event.request.url,
-                                            body: event.request.text()
+                                            body: requestBody
                                         });
                                     });
                                     return response;
