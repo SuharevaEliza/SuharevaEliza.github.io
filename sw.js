@@ -51,6 +51,7 @@ self.addEventListener('fetch', function (event) {
                     return fetch(event.request)
                         .then(function (response) {
                             console.log('POST request success');
+                            console.log(response);
                             return response;
                         })
                         .catch(function(err) {
