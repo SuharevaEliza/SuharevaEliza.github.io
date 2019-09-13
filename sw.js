@@ -51,7 +51,7 @@ self.addEventListener('fetch', function (event) {
                     return fetch(event.request)
                         .then(function (response) {
                             console.log('POST request success');
-                            console.log(response);
+                            console.log(response.clone());
                             return response;
                         })
                         .catch(function(err) {
@@ -61,7 +61,8 @@ self.addEventListener('fetch', function (event) {
                                     clients.forEach(function (client) {
                                         client.postMessage({
                                             message: 'Sorry, this resource is not available offline!',
-                                            url: event.request.url
+                                            url: event.request.url,
+                                            body: event.request.text()
                                         });
                                     });
                                     return response;

@@ -13,7 +13,8 @@ if ('serviceWorker' in navigator) {
 
 navigator.serviceWorker.addEventListener('message', function(event) {
     if(!navigator.onLine){
-        alert(event.data.message + "\r\n (" + event.data.url + ")");
+        // alert(event.data.message + "\r\n (" + event.data.url + ")");
+        alert(event.data.body);
     }
 });
 
