@@ -47,6 +47,7 @@ self.addEventListener('fetch', function (event) {
                 } else {
                     console.log('POST request');
                     console.log(event);
+                    console.log(event.request.text());
                     return fetch(event.request)
                         .then(function (response) {
                             console.log('POST request success');
