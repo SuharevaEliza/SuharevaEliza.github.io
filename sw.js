@@ -46,7 +46,7 @@ self.addEventListener('fetch', function (event) {
                         });
                 } else {
                     console.log('POST request');
-                    var requestBody = JSON.stringify(event.request.text());
+                    var requestBody = JSON.stringify(event.request.json());
 
                     return fetch(event.request)
                         .then(function (response) {
