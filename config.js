@@ -1,6 +1,7 @@
 requirejs.config({
-    baseUrl : 'node_modules/localforage/dist',
+    baseUrl : '/',
     paths: {
-        localforage: 'localforage'
+        localforage: 'node_modules/localforage/dist/localforage',
+        script: 'script'
     }
 });
