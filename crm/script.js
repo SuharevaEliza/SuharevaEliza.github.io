@@ -237,14 +237,29 @@ function setButtonListeners(){
 
 function generateFile(){
     var fileHeader = 'Field_Name,Display_Field_Name,Type,Dropdown_Source_Value,Dropdown_Display_Value\n';
-    var text = fileHeader + Object.keys(DATA_COLLECTION).map((el) => {
-        DATA_COLLECTION[el].map((value) => {
-            if(value === 'undefined') return 'NULL';
-        })
-        return DATA_COLLECTION[el].join(',');
+    var sortedData = sortObject(DATA_COLLECTION);
+    
+    var text = fileHeader + sortedData.map((array) => {
+        array[1].map(value => {
+            if(value === 'undefined' || value === "") return 'NULL';
+        });
+        return array[1].join(',');
     }).join('\n');
+
+    // var text = fileHeader + Object.keys(sortedData).map((el) => {
+    //     sortedData[el].map((value) => {
+    //         if(value === 'undefined') return 'NULL';
+    //     })
+    //     return sortedData[el].join(',');
+    // }).join('\n');
     var filename = "CRM-mapping_" + Date.now() + ".csv";
     downloadFile(filename, text);
+}
+
+function sortObject(object){
+    return Object.entries(object).sort((a,b) => {
+        return a[0].split('/')[0] - b[0].split('/')[0]
+    })
 }
 
 
