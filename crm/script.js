@@ -29,6 +29,8 @@ function populateOptions() {
 
 function addNewRow(){
     var newRow = ROW_TEMPLATE.cloneNode(true);
+    newRow.classList.remove('row-template');
+    newRow.classList.add('crm-row');
 
     ROW_COUNT++;
     newRow.id = 'row-' + ROW_COUNT;
@@ -60,7 +62,6 @@ function addRemoveRowHandler(row){
     removeButton.classList.remove('hidden');
     removeButton.addEventListener('click', () => {
         row.parentElement.removeChild(row);
-        ROW_COUNT--;
         Object.keys(DATA_COLLECTION).forEach((ind)=>{
             if(ind.indexOf(objectID)>-1) delete DATA_COLLECTION[ind];
         });
@@ -75,6 +76,7 @@ function addSelectionListener(row) {
     select.addEventListener('change', () => {
         var selectedValue = select.selectedOptions[0].value;
         if(selectedValue === 'bool'){
+            removeCustomOptions(row);
             setBoolOption(sourceValue, displayValue);
             disableAddingOption(row);
         }
@@ -84,6 +86,7 @@ function addSelectionListener(row) {
             enableAddingOption(row);
         } else {
             toggleInputValueFields(sourceValue, displayValue, true, 'NULL')
+            removeCustomOptions(row);
             removeBoolOptions(row);
             disableAddingOption(row);
         }
@@ -101,12 +104,15 @@ function addInputListener(row, source, display){
     
     if(!source && !display && row.id) {
         inputs = row.querySelectorAll('input, select');
-    } else {
+    } else if (display) {
         inputs = [,,,source, display];
+    } else {
+        inputs = [,,,source,];
     }
 
     inputs.forEach((el, index) => {
         el.addEventListener(actions[el.tagName], () => {
+            el.classList.remove('invalid');
             Object.keys(DATA_COLLECTION).forEach((ind)=>{
                 if(objectID.indexOf('/') < 0){
                     DATA_COLLECTION[objectID][index] = el.value;
@@ -133,6 +139,7 @@ function toggleInputValueFields(sourceValue, displayValue, disabled, placeholder
 }
 
 function setBoolOption(sourceValue, displayValue){
+    var row = getParent(sourceValue, '.crm-row')
     var sourceContainer = sourceValue.parentElement;
     var displayContainer = displayValue.parentElement;
     var newSourceContainer = sourceContainer.cloneNode(true);
@@ -140,7 +147,9 @@ function setBoolOption(sourceValue, displayValue){
     var newSourceValue = newSourceContainer.querySelector('input');
     var newDisplayValue = newDisplayContainer.querySelector('input');
     newSourceContainer.classList.add('bool');
+    newSourceContainer.dataset.index = 1;
     newDisplayContainer.classList.add('bool');
+    newDisplayContainer.dataset.index = 1;
 
     sourceValue.value = 'True';
     newSourceValue.value = 'False';
@@ -149,14 +158,22 @@ function setBoolOption(sourceValue, displayValue){
     sourceValue.disabled = newSourceValue.disabled = true;
     displayValue.value = newDisplayValue.value = displayValue.placeholder = newDisplayValue.placeholder = '';
     displayContainer.parentElement.appendChild(newDisplayContainer);
+
+    var dataObjectId = row.dataset.index + '/1';
+    createDataObject(dataObjectId);
+    DATA_COLLECTION[dataObjectId] = createOptionDataSet(row);
+    addInputListener(row, sourceValue);
+    addInputListener(row, newSourceValue);
 }
 
 function enableAddingOption(row){
-    var newOptionButton = ADD_OPTION_TEMPLATE.cloneNode(true);
-    newOptionButton.classList.remove('template');
-    row.querySelector('.data-type-container').appendChild(newOptionButton);
-    newOptionButton.classList.remove('removed');
-    newOptionButton.addEventListener('click', addNewOption);
+    if(!row.querySelector('.add-option-container')){
+        var newOptionButton = ADD_OPTION_TEMPLATE.cloneNode(true);
+        newOptionButton.classList.remove('template');
+        newOptionButton.classList.remove('removed');
+        row.querySelector('.data-type-container').appendChild(newOptionButton);
+        newOptionButton.addEventListener('click', addNewOption);
+    }
 }
 
 function addNewOption(){
@@ -166,11 +183,13 @@ function addNewOption(){
     
     var newSourceValue = sourceValues[0].cloneNode(true);
     var newSourceInput = newSourceValue.querySelector('input');
+    newSourceValue.classList.add('option');
     newSourceValue.dataset.index = displayValues.length;
     newSourceInput.value = '';
     
     var newDisplayValue = displayValues[0].cloneNode(true);
     var newDisplayInput = newDisplayValue.querySelector('input')
+    newDisplayValue.classList.add('option');
     newDisplayValue.dataset.index = displayValues.length;
     newDisplayValue.querySelector('button').classList.remove('hidden');
     newDisplayInput.value = '';
@@ -225,6 +244,12 @@ function removeBoolOptions(row){
     })
 }
 
+function removeCustomOptions(row){
+    [].slice.call(row.querySelectorAll('.option')).forEach((el) => {
+        if(el) el.parentElement.removeChild(el);
+    })
+}
+
 function setButtonListeners(){
     document.querySelectorAll('#add-row, #export-file').forEach((button) => {
         if(button.id === 'add-row'){
@@ -236,24 +261,19 @@ function setButtonListeners(){
 }
 
 function generateFile(){
-    var fileHeader = 'Field_Name,Display_Field_Name,Type,Dropdown_Source_Value,Dropdown_Display_Value\n';
-    var sortedData = sortObject(DATA_COLLECTION);
-    
-    var text = fileHeader + sortedData.map((array) => {
-        array[1].map(value => {
-            if(value === 'undefined' || value === "") return 'NULL';
-        });
-        return array[1].join(',');
-    }).join('\n');
-
-    // var text = fileHeader + Object.keys(sortedData).map((el) => {
-    //     sortedData[el].map((value) => {
-    //         if(value === 'undefined') return 'NULL';
-    //     })
-    //     return sortedData[el].join(',');
-    // }).join('\n');
-    var filename = "CRM-mapping_" + Date.now() + ".csv";
-    downloadFile(filename, text);
+    if(validateInputs() === true){
+        var fileHeader = 'Field_Name,Display_Field_Name,Type,Dropdown_Source_Value,Dropdown_Display_Value\n';
+        var sortedData = sortObject(DATA_COLLECTION);
+        
+        var text = fileHeader + sortedData.map((array) => {
+            array[1].map(value => {
+                if(value === 'undefined' || value === "") return 'NULL';
+            });
+            return array[1].join(',');
+        }).join('\n');
+        var filename = "CRM-mapping_" + Date.now() + ".csv";
+        downloadFile(filename, text);
+    }
 }
 
 function sortObject(object){
@@ -262,6 +282,21 @@ function sortObject(object){
     })
 }
 
+function validateInputs() {
+    var result = true;
+    [].slice.call(document.querySelectorAll('.crm-row input, .crm-row select')).forEach(field => {
+        if (field.tagName === "SELECT" && field.value === "unselected") {
+            field.classList.add('invalid');
+            result = false;
+        }
+        if (field.tagName === "INPUT" && field.disabled === false && field.value === ""){
+            field.classList.add('invalid');
+            result = false;
+        }
+    })
+
+    return result;
+}
 
 function downloadFile(filename, text) {
     var element = document.createElement('a');

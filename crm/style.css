@@ -28,8 +28,8 @@ button.add-option {
     justify-content: center;
 }
 
-.crm-row.hidden{
-    display: none !important;
+#row-template{
+    display: none;
 }
 
 .display-value-container--remove.btn.btn-outline-danger {
@@ -43,4 +43,8 @@ button.add-option {
 
 .removed {
     display: none !important;
+}
+
+.invalid {
+    border: 2px solid rgb(156, 46, 46);
 }
