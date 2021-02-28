@@ -57,16 +57,33 @@ function configureNewRow(row) {
 
 function addRemoveRowHandler(row){
     var removeButton = row.querySelector('.remove');
-    var objectID = row.dataset.index;
 
-    removeButton.classList.remove('hidden');
+    displayRemoveRowButtons();
     removeButton.addEventListener('click', () => {
-        row.parentElement.removeChild(row);
-        Object.keys(DATA_COLLECTION).forEach((ind)=>{
-            if(ind.indexOf(objectID)>-1) delete DATA_COLLECTION[ind];
-        });
+        addRemoveFunctionality(row)
+        displayRemoveRowButtons();
     });
 }
+
+function displayRemoveRowButtons(){
+    var buttons = [].slice.call(TABLE.querySelectorAll('.crm-row .remove'));
+    if(buttons.length > 1){
+        buttons.forEach(button => {
+            button.classList.remove('hidden');
+        })
+    } else {
+        buttons[0].classList.add('hidden');
+    }
+}
+ function addRemoveFunctionality(row) {
+    var buttons = [].slice.call(TABLE.querySelectorAll('.crm-row .remove'))
+    if(buttons.length >1 ){
+        row.parentElement.removeChild(row);
+        Object.keys(DATA_COLLECTION).forEach((ind)=>{
+            if(ind.indexOf(row.dataset.index)>-1) delete DATA_COLLECTION[ind];
+        });
+    }
+ }
 
 function addSelectionListener(row) {
     var select = row.querySelector('select');
@@ -273,6 +290,13 @@ function generateFile(){
         }).join('\n');
         var filename = "CRM-mapping_" + Date.now() + ".csv";
         downloadFile(filename, text);
+    } else {
+        this.classList.add('btn-danger');
+        this.textContent = 'fill empty fields and try again';
+        setTimeout(() => {
+            this.classList.remove('btn-danger');
+            this.textContent = 'export .csv';
+        }, 3000)
     }
 }
 
