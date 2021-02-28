@@ -55,7 +55,6 @@ function configureNewRow(row) {
 
 function addRemoveRowHandler(row){
     var removeButton = row.querySelector('.remove');
-    console.log(removeButton);
     var objectID = row.dataset.index;
 
     removeButton.classList.remove('hidden');
@@ -111,7 +110,7 @@ function addInputListener(row, source, display){
             Object.keys(DATA_COLLECTION).forEach((ind)=>{
                 if(objectID.indexOf('/') < 0){
                     DATA_COLLECTION[objectID][index] = el.value;
-                    if(index < 3) {
+                    if(ind.split('/')[0] === objectID && index < 3) {
                         DATA_COLLECTION[ind][index] = el.value;
                     }
                 } else {
@@ -239,12 +238,9 @@ function setButtonListeners(){
 function generateFile(){
     var fileHeader = 'Field_Name,Display_Field_Name,Type,Dropdown_Source_Value,Dropdown_Display_Value\n';
     var text = fileHeader + Object.keys(DATA_COLLECTION).map((el) => {
-        console.log(DATA_COLLECTION[el]);
         DATA_COLLECTION[el].map((value) => {
-            console.log(value);
             if(value === 'undefined') return 'NULL';
         })
-        console.log(DATA_COLLECTION[el]);
         return DATA_COLLECTION[el].join(',');
     }).join('\n');
     var filename = "CRM-mapping_" + Date.now() + ".csv";
