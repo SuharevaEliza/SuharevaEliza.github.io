@@ -6,76 +6,86 @@
     <title>CRM mapping creator</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   </head>
 
   <body>
     <div id="main-content">
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Column name in CRM</th>
-            <th scope="col">Dropdown name</th>
-            <th scope="col">Data type</th>
-            <th scope="col">Possible values</th>
-            <th scope="col">Displayed values</th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody id="table-body">
-          <tr class="row-template hidden" id="row-template">
-            <td><input type="text" name="display-name" /></td>
-            <td><input type="text" name="column-name" /></td>
-            <td>
-              <div class="data-type-container">
-                <select name="data-type">
-                  <option value="unselected"></option>
-                </select>
-              </div>
-            </td>
-            <td>
-              <div class="source-value-container" data-index="0">
-                <input type="text" class="source-value" disabled placeholder="NULL" />
-              </div>
-            </td>
-            <td>
-              <div class="display-value-container" data-index="0">
-                <input type="text" class="display-value" disabled placeholder="NULL" />
-                <button type="button" class="display-value-container--remove btn btn-outline-danger hidden">- option</button>
-              </div>
-            </td>
-            <td><button type="button" class="btn btn-outline-danger remove hidden">- row</button></td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="primary-button">
-        <button id="add-row" type="button" class="btn btn-primary">add row</button>
+      <div id="page-title">
+        <h1>CRM feed metadata</h1>
       </div>
-      <div class="primary-button">
-        <button id="export-file" type="button" class="btn btn-primary">export .csv</button>
+      <div class="table-container">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Column name in CRM</th>
+              <th scope="col">Dropdown name in DY</th>
+              <th scope="col">Data type</th>
+              <th scope="col">Possible values</th>
+              <th scope="col">Displayed values</th>
+              <th scope="col" class="remove-button"></th>
+            </tr>
+          </thead>
+          <tbody id="table-body">
+            <tr class="row-template crm-row hidden" id="row-template">
+              <td><input type="text" name="display-name" /></td>
+              <td><input type="text" name="column-name" /></td>
+              <td>
+                <div class="data-type-container">
+                  <select name="data-type">
+                    <option value="unselected"></option>
+                  </select>
+                </div>
+              </td>
+              <td>
+                <div class="source-value-container" data-index="0">
+                  <input type="text" class="source-value" disabled placeholder="NULL" />
+                </div>
+              </td>
+              <td>
+                <div class="display-value-container" data-index="0">
+                  <input type="text" class="display-value" disabled placeholder="NULL" />
+                  <div class="display-value-container--remove hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                      <path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/>
+                    </svg>
+                  </div>
+                </div>
+              </td>
+              <td class="remove-button">
+                <a class="button remove-row hidden">
+                  <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd">
+                    <path d="M19 24h-14c-1.104 0-2-.896-2-2v-16h18v16c0 1.104-.896 2-2 2m3-19h-20v-2h6v-1.5c0-.827.673-1.5 1.5-1.5h5c.825 0 1.5.671 1.5 1.5v1.5h6v2zm-12-2h4v-1h-4v1z"/>
+                  </svg>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <div class="buttons-container">
+        <div id="error-message" class="hidden">
+          <div>Fill Empty Fields And Try Again</div>
+        </div>
+        <div id="add-row" class="primary-button">
+          <div>Add a New Row</div>
+        </div>
+        <div id="export-file" class="primary-button">
+          <div>Export a CSV File</div>
+        </div>
+        <div id="generate-crm-sample" class="primary-button disabled">
+          <div>Generate a CRM Sample</div>
+        </div>
       </div>
     </div>
 
     <!-- Templates -->
     <div class="add-option-container template removed">
-      <button type="button" class="btn btn-light add-option">+ option</button>
-    </div>
-
-    <div class="remove-option-container template removed">
-      <button type="button" class="btn btn-light remove-option">- option</button>
+      <div class="add-option">+ add</div>
     </div>
 
     <script src="script.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-      crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-      crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-      crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Faker/3.1.0/faker.min.js" integrity="sha512-/seDHxVfh1NvFUscAj8GsHQVZJvr2jjAoYsNL7As2FCaFHUHYIarl3sRCvVlFgyouVNiRgHIebyLKjpgd1SLDw==" crossorigin="anonymous"></script>
   </body>
 
 </html>
