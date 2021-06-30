@@ -9,6 +9,7 @@
     <link rel="dns-prefetch" href="//rcom.dynamicyield.com">
     <script type="text/javascript">
         window.DY = window.DY || {};
+        DY.userActiveConsent = { accepted: false}
         DY.recommendationContext = { type: "HOMEPAGE", lng: "de-DE-aeg" };
     </script>
     <!--     US -->
@@ -28,14 +29,7 @@
 </div>
 
 <div id="content">
-    <h1 id="header">Sending network requests</h1>
-    <div id="clicks">
-        <button id="get">GET</button>
-        <button id="post">POST</button>
-        <div id="message"></div>
-    </div>
     <div class="image-container">
-        <h1 id="image-headline">This is an image from the web</h1>
         <img src="https://images.unsplash.com/photo-1562887189-e5d078343de4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80" alt="image" id="image">
     </div>
 </div>
